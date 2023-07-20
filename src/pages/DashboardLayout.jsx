@@ -45,7 +45,6 @@ const DashboardLayout = ({isDarkThemeEnabled}) => {
         setShowSidebar(!showSidebar)
     }
 
-    console.log(showSidebar)
 
     const LogoutUser = () => {
         try {
