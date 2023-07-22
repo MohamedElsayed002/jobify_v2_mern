@@ -4,7 +4,7 @@ import axios from "axios"
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage"
 import FormRow from "../components/FormRow"
 import Logo from "../components/Logo"
-import { Form , redirect, useNavigation,Link } from 'react-router-dom'
+import { Form , redirect, useNavigation,Link, useNavigate } from 'react-router-dom'
 import { toast } from "react-toastify"
 import customFetch from "../utils/customFetch"
 
@@ -29,8 +29,25 @@ const Login = () => {
 
 
     const navigation = useNavigation()
-    console.log(navigation)
     const isSubmitting = navigation.state === 'submitting'
+
+    const navigate = useNavigate()
+
+    const loginDemoUser = async () => {
+        const data = {
+            email : 'test@example.com',
+            password : '123456789'
+        }
+
+        try {
+            let loginData = await customFetch.post('/auth/login' , data)
+            toast.success('test the application')
+            navigate('/dashboard')
+        }catch(error) {
+            toast.error(error.response.data.msg)
+        }
+    }
+
 
     return (
         <Wrapper>
@@ -50,7 +67,7 @@ const Login = () => {
                 <button type="submit" className='btn btn-block' disabled={isSubmitting}>
                     {isSubmitting ? 'submitting...' : 'submit'}
                 </button>
-                <button type="button" className="btn btn-block">
+                <button onClick={loginDemoUser} type="button" className="btn btn-block">
                     explore the app
                 </button>
                 <p>
